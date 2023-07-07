@@ -1,0 +1,81 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <div class="col-6" style="margin-top: 110px;">
+      <div class="bg-white mat-elevation-z3 rounded mb-5">
+        <mat-tab-group mat-stretch-tabs dynamicHeight>
+          <mat-tab label="Update Info">
+            <div class="p-5">
+              <form [formGroup]="updateInfoFormGroup" (ngSubmit)="handleUpdateInfo()">
+                <mat-form-field class="w-100 pb-2" appearance="outline">
+                  <mat-label>Say Something About You</mat-label>
+                  <textarea matInput formControlName="intro" placeholder="Say Something About You" cdkTextareaAutosize
+                            cdkAutosizeMinRows="2" cdkAutosizeMaxRows="5">
+									</textarea>
+                  <mat-error *ngIf="updateInfoIntro.hasError('maxlength') || updateInfoIntro.hasError('serverError')">
+                    Cannot exceed 100 characters
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-100 pb-2" appearance="outline">
+                  <mat-label>First Name</mat-label>
+                  <input type="text" matInput formControlName="name" placeholder="Ex. John">
+                  <mat-error
+                    *ngIf="updateInfoFirstName.hasError('required') || updateInfoFirstName.hasError('maxlength') || updateInfoFirstName.hasError('serverError')">
+                    This field is required and cannot exceed 64 characters
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-100 pb-2" appearance="outline">
+                  <mat-label>Last Name</mat-label>
+                  <input type="text" matInput formControlName="surname" placeholder="Ex. Doe">
+                  <mat-error
+                    *ngIf="updateInfoLastName.hasError('required') || updateInfoLastName.hasError('maxlength') || updateInfoLastName.hasError('serverError')">
+                    This field is required and cannot exceed 64 characters
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-100 pb-2" appearance="outline">
+                  <mat-label>Email</mat-label>
+                  <input type="text" matInput formControlName="username" placeholder="Ex. Software Engineer at ABC Inc.">
+                  <mat-error
+                    *ngIf="updateInfoWorkplace.hasError('maxlength') || updateInfoWorkplace.hasError('serverError')">
+                    Cannot exceed 128 characters
+                  </mat-error>
+                </mat-form-field>
+
+                <mat-form-field class="w-100 pb-2" appearance="outline">
+                  <mat-label>Hometown</mat-label>
+                  <input type="text" matInput formControlName="hometown" placeholder="Ex. Dhaka">
+                  <mat-error
+                    *ngIf="updateInfoHometown.hasError('maxlength') || updateInfoHometown.hasError('serverError')">
+                    Cannot exceed 128 characters
+                  </mat-error>
+                </mat-form-field>
+
+
+                <mat-form-field class="w-100 pb-2" appearance="outline">
+                  <mat-label>Workplace</mat-label>
+                  <input type="text" matInput formControlName="workplace"
+                         placeholder="Ex. Software Engineer at ABC Inc.">
+                  <mat-error
+                    *ngIf="updateInfoWorkplace.hasError('maxlength') || updateInfoWorkplace.hasError('serverError')">
+                    Cannot exceed 128 characters
+                  </mat-error>
+                </mat-form-field>
+
+
+                <span class="d-block mb-4 pb-2"></span>
+
+                <mat-card-actions>
+                  <button mat-raised-button color="primary" type="submit">Save Updates</button>
+                </mat-card-actions>
+              </form>
+            </div>
+
+            <mat-progress-bar mode="indeterminate" *ngIf="submittingForm"></mat-progress-bar>
+          </mat-tab>
+        </mat-tab-group>
+      </div>
+    </div>
+  </div>
+</div>

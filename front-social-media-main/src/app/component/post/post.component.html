@@ -1,0 +1,66 @@
+<mat-card class="position-relative mat-elevation-z3 mb-4" *ngIf="postResponse">
+  <mat-card-header>
+    <div mat-card-avatar class="centered-bg-image" [style.background-image]="'url(' + postImage + ')'">
+    </div>
+    <mat-card-title>
+      <a href="/users/{{ postResponse.post.author.id }}" class="text-decoration-none text-dark">
+        {{ postResponse.post.author.name + ' ' + postResponse.post.author.surname }}
+      </a>
+    </mat-card-title>
+    <mat-card-subtitle>
+      <mat-icon class="align-middle w-auto h-auto" style="font-size: 16px;">watch_later</mat-icon>
+      <span class="align-middle ps-1 small fw-500">{{ postResponse.post.dateCreated | date:'medium' }}</span>
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <div align="end" style="position: absolute; top: 10px; right: 10px"
+       *ngIf="postResponse.post.author.id === authUserId">
+    <button mat-icon-button [matMenuTriggerFor]="coverPhotoMenu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #coverPhotoMenu="matMenu">
+      <button mat-menu-item (click)="openPostEditDialog()">
+        <mat-icon>edit</mat-icon>
+        Edit Post
+      </button>
+      <button mat-menu-item (click)="openPostDeleteConfirmDialog()">
+        <mat-icon>delete_sweep</mat-icon>
+        Delete Post
+      </button>
+    </mat-menu>
+  </div>
+
+  <img *ngIf="postResponse.post.postPhoto" mat-card-image src="{{ environment.photoUrl+postResponse.post.postPhoto }}" alt="">
+  <mat-card-content class="mb-4">
+    <p class="p-2">
+      {{ postResponse.post.content }}
+    </p>
+  </mat-card-content>
+  <hr class="divider mb-4">
+
+  <mat-chip-list>
+    <mat-chip class="me-3 cursor-pointer"
+              style="padding: 4px 10px !important; min-height: 28px;" (click)="openLikeDialog()">
+      Likes
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
+				{{ postResponse.post.likeCount }}
+			</span>
+    </mat-chip>
+
+    <mat-chip class="me-3 cursor-pointer"
+              style="padding: 4px 10px !important; min-height: 28px;" (click)="openCommentDialog()">
+      Comments
+      <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-secondary">
+				{{ postResponse.post.commentCount }}
+			</span>
+    </mat-chip>
+  </mat-chip-list>
+
+  <mat-card-actions align="end" style="margin-top: -50px !important; padding-bottom: 20px;">
+    <button class="me-2" mat-icon-button
+            (click)="likeOrUnlikePost(postResponse.likedByAuthUser,postResponse.post.id)">
+      <mat-icon [ngClass]="postResponse.likedByAuthUser ? 'text-danger' : 'text-secondary'">favorite</mat-icon>
+    </button>
+
+  </mat-card-actions>
+</mat-card>

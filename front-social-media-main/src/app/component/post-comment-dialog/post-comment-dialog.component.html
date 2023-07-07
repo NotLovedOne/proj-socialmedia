@@ -1,0 +1,45 @@
+<mat-dialog-content>
+  <div class="position-relative">
+    <h2 class="mat-h2 m-0">
+      {{ dataPost.commentCount > 0 ? 'Comments(' + dataPost.commentCount + ')' : 'No Comment' }}
+    </h2>
+
+    <hr class="divider">
+
+    <form [formGroup]="commentFormGroup" #commentForm="ngForm" (ngSubmit)="createNewComment()"
+          class="position-relative">
+      <mat-form-field appearance="outline" class="w-100" style="padding-right: 90px;">
+        <mat-label>Post new comment</mat-label>
+        <textarea matInput formControlName="content" placeholder="Post new comment"></textarea>
+        <mat-error *ngIf="content.hasError('required') && commentForm.submitted">
+          Comment cannot be empty
+        </mat-error>
+        <mat-error *ngIf="content.hasError('maxlength')">
+          Comment length cannot exceed 1024 characters
+        </mat-error>
+      </mat-form-field>
+      <button mat-raised-button color="primary" type="submit" class="position-absolute"
+              style="top: 4px; right: 0;">Submit</button>
+    </form>
+
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item ps-0 pt-3 pe-0 pb-3" *ngFor="let comment of commentResponseList">
+        <div class="rounded-circle d-inline-block align-middle centered-bg-image"
+             style="width: 35px; height: 35px;  background-image: url('{{comment.author.profilePhoto ?environment.photoUrl+comment.author.profilePhoto : environment.defaultProfilePhotoUrl}}');">
+        </div>
+        <div class="ps-5" style="margin-top: -38px;">
+          <a class="d-inline-block text-decoration-none text-dark align-middle fw-500 cursor-pointer"
+             href="/users/{{comment.author.id}}">{{comment.author.name + ' ' +
+          comment.author.surname}}</a>
+          <br>
+          <span class="text-secondary d-inline-block">
+						<mat-icon class="align-middle w-auto h-auto" style="font-size: 16px;">watch_later</mat-icon>
+						<span class="align-middle ps-1 small fw-500">{{ comment.dateCreated | date }}</span>
+					</span>
+          <p class="pt-2 pb-3">{{ comment.content }}</p>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+</mat-dialog-content>

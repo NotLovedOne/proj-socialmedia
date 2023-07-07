@@ -1,0 +1,37 @@
+<mat-toolbar color="primary" class="position-fixed top-0 mat-elevation-z3 p-4" style="z-index: 999;">
+  <a href="/" class="text-white text-decoration-none">Social App</a>
+
+  <span class="example-spacer"></span>
+
+  <a href="/profile" class="rounded-pill ps-2 pt-1 pe-3 pb-1 text-white text-decoration-none" *ngIf="isUserLoggedIn">
+		<span class="rounded-circle d-inline-block align-middle centered-bg-image"
+          style="width: 30px; height: 30px; background-color: white;"
+          [style.background-image]="'url(' + profileImage + ')'"></span>
+    <span class="mat-body-strong d-inline-block align-middle ps-2">{{ authUser?.name }}</span>
+  </a>
+
+  <a mat-raised-button class="me-3" *ngIf="!isUserLoggedIn" href="/login">Login</a>
+  <a mat-raised-button *ngIf="!isUserLoggedIn" href="/signup">Signup</a>
+
+  <div *ngIf="isUserLoggedIn">
+    <button mat-icon-button (click)="openSearchDialog()">
+      <mat-icon>search</mat-icon>
+    </button>
+    <button mat-icon-button (click)="openUsersDialog()">
+      <mat-icon>supervisor_account</mat-icon>
+    </button>
+    <button mat-icon-button [matMenuTriggerFor]="mainMenu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+    <mat-menu #mainMenu="matMenu" xPosition="before">
+      <a mat-menu-item href="/profile">Profile</a>
+      <a mat-menu-item href="/settings">Settings</a>
+      <a mat-menu-item href="/logout">Logout</a>
+    </mat-menu>
+  </div>
+</mat-toolbar>
+
+<button mat-fab color="primary" matTooltip="Create New Post" matTooltipPosition="left" class="position-fixed"
+        style="bottom: 30px; right: 30px;" (click)="openPostDialog()">
+  <mat-icon>add</mat-icon>
+</button>
